@@ -49,13 +49,15 @@ def get_database():
 
 class DangersForm(FlaskForm):
 
-    region = SelectField('Region', choices=select_region_choices)
+    region = SelectField('mittelreich', choices=select_region_choices)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def dangers():
     form = DangersForm()
-    region = form.region.data
+    region = select_region_choices[0][0]
+    if form.validate_on_submit():
+        region = form.region.data
     animal_query = 'select Name, Quelle from animals where[%s]=1 order by name' % query_names[region]
     monster_query = 'select Name, Quelle from ungeheuer where[%s]=1 order by name' % query_names[region]
     db_conn = get_database()
