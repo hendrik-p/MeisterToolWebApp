@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+  <form method="POST" action="{{ url_for('dangers') }}">
+    {{ form.hidden_tag() }}
+    {{ form.region(**{"onchange":"this.form.submit()"}) }}
+  </form>
+
+  <div>
+    <table>
+    <tr>
+    <th>Wildtier</th>
+    <th>Quelle</th>
+    </tr>
+    {% for name, source in animal_rows %}
+    <tr>
+      <td>{{ name }}</td>
+      <td>{{ source }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <table>
+    <tr>
+    <th>Ungeheuer</th>
+    <th>Quelle</th>
+    </tr>
+    {% for name, source in monster_rows %}
+    <tr>
+      <td>{{ name }}</td>
+      <td>{{ source }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

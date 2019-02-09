@@ -1,28 +1,7 @@
-<html>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+{% extends "base.html" %}
 
-  <form method="POST" action="{{ url_for('dangers') }}">
-    {{ form.hidden_tag() }}
-    {{ form.region(**{"onchange":"this.form.submit()"}) }}
-  </form>
-
-  <div>
-    <table>
-    {% for name, source in animal_rows %}
-    <tr>
-      <td>{{ name }}</td>
-      <td>{{ source }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-    <table>
-    {% for name, source in monster_rows %}
-    <tr>
-      <td>{{ name }}</td>
-      <td>{{ source }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-  </div>
-
-</html>
+{% block content %}
+<div class="content"/>
+  Willkommen!
+</div>
+{% endblock %}

@@ -1,5 +1,30 @@
-table { width : 25%;
-        float : left;
-      }
-body { font-family : sans-serif;
-     }
+body { font-family: sans-serif; }
+
+table { width: 25%;
+        float: left; }
+
+th { text-align: left; }
+
+.sidenav { height: 100%;
+           width: 10%;
+           position: fixed;
+           z-index: 1;
+           top: 0;
+           left: 0;
+           overflow-x: hidden;
+           padding-top: 20px; }
+
+.sidenav a {  padding: 6px 8px 6px 16px;
+              font-size: 25px;
+              display: block;
+}
+
+.content { margin-left: 10%;
+           padding: 0px 10px; }
+
+.input_container form { display: table; }
+.input_container p { display: table-row;  }
+.input_container label { display: table-cell;
+                         padding: 10px; }
+.input_container input { display: table-cell; }
+

@@ -1,42 +1,10 @@
 import sqlite3
-from flask import Flask, render_template, g
-from flask_wtf import FlaskForm
-from wtforms import SelectField
+from flask import Flask, render_template, g, request
+from forms import DangersForm, DiceRollForm
+from functions import fetch_animals_and_monsters, dice_roll
 
 app = Flask(__name__)
 app.secret_key = 'my_secret_development_key'
-
-regions = ['Mittelreich',
-           'Orkland',
-           'Thorwal',
-           'Nostria',
-           'Andergast',
-           'Horasreich',
-           'Zyklopeninseln',
-           'Alanfa',
-           'Dschungel des Südens',
-           'Südmeer',
-           'Kalifat',
-           'Länder der Tulamiden',
-           'Aranien',
-           'Maraskan',
-           'Schattenlande',
-           'Salamandersteine',
-           'Svelltal',
-           'Bornland',
-           'Hoher Norden',
-           'Mhanadistan',
-           'Wüste Khom']
-
-select_region_choices = []
-query_names = {}
-for region in regions:
-    value = region.lower().replace(' ', '_')
-    value = value.replace('ä', 'ae')
-    value = value.replace('ö', 'oe')
-    value = value.replace('ü', 'ue')
-    select_region_choices.append((value, region))
-    query_names[value] = region
 
 db_path = 'odatastools.db'
 
@@ -47,28 +15,44 @@ def get_database():
         db = g._database
     return db
 
-class DangersForm(FlaskForm):
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-    region = SelectField('mittelreich', choices=select_region_choices)
-
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/dangers', methods=['GET', 'POST'])
 def dangers():
     form = DangersForm()
-    region = select_region_choices[0][0]
+    region = form.select_region_choices[0][0]
     if form.validate_on_submit():
         region = form.region.data
-    animal_query = 'select Name, Quelle from animals where[%s]=1 order by name' % query_names[region]
-    monster_query = 'select Name, Quelle from ungeheuer where[%s]=1 order by name' % query_names[region]
     db_conn = get_database()
-    db_cursor = db_conn.cursor()
-    db_cursor.execute(animal_query)
-    animal_rows = db_cursor.fetchall()
-    db_cursor.execute(monster_query)
-    monster_rows = db_cursor.fetchall()
-    return render_template('index.html', form=form, animal_rows=animal_rows,
+    animal_rows, monster_rows = fetch_animals_and_monsters(db_conn,
+                                                           form.query_names[region])
+    return render_template('dangers.html', form=form, animal_rows=animal_rows,
                            monster_rows=monster_rows)
 
+@app.route('/dice', methods=['GET', 'POST'])
+def dice():
+    default_value = 13
+    form = DiceRollForm()
+    if request.method == 'GET':
+        form.attribute1.data = default_value
+        form.attribute2.data = default_value
+        form.attribute3.data = default_value
+        form.skill.data = 0
+        form.mod.data = 0
+    if form.validate_on_submit():
+        att1 = form.attribute1.data
+        att2 = form.attribute2.data
+        att3 = form.attribute3.data
+        skill = form.skill.data
+        mod = form.mod.data
+        rolls, result_str = dice_roll(att1, att2, att3, skill, mod)
+        return render_template('dice.html', form=form, rolls=rolls,
+                               result_str=result_str)
+    print('did not validate')
+    return render_template('dice.html', form=form)
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
 
