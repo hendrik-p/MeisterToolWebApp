@@ -1,0 +1,35 @@
+{% extends "mobile/base.html" %}
+
+{% block content %}
+<div class="content">
+  <div class="input_container">
+    <form method="POST" action="{{ url_for('dice') }}">
+      {{ form.hidden_tag() }}
+      <p>
+      <label>Eigenschaft 1</label> {{ form.attribute1 }} <br>
+      </p>
+      <p>
+      <label>Eigenschaft 2</label> {{ form.attribute2 }} <br>
+      </p>
+      <p>
+      <label>Eigenschaft 3</label> {{ form.attribute3 }} <br>
+      </p>
+      <p>
+      <label>Talentwert</label> {{ form.skill }} <br>
+      </p>
+      <p>
+      <label>Modifikator</label> {{ form.mod }} </br>
+      </p>
+      {{ form.roll_button }}
+    </form>
+  </div>
+  {% if rolls %}
+    {{ rolls[0] }}
+    {{ rolls[1] }}
+    {{ rolls[2] }}
+    <br>
+    {{ result_str }}
+  {% endif %}
+
+</div>
+{% endblock %}

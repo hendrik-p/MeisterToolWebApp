@@ -1,0 +1,53 @@
+<html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<style>
+.topnav { position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%; }
+.topnav #myLinks { display: None;
+                   font-size: 22px;
+                   padding-top: 40px;
+                   background: white; }
+.topnav .icon { color: black;
+                font-size: 25px;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                padding: 10px;}
+</style>
+
+<body>
+  <div class="topnav">
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+    <div id="myLinks">
+      <a href="/">Home</a> </br>
+      <a href="dangers">Gefahren</a> </br>
+      <a href="dice">Würfeln</a> </br>
+    </div>
+  </div>
+
+  {% block content %}
+  {% endblock %}
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+
+</html>
+
