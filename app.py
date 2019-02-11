@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from flask import Flask, render_template, g, request
 from flask_mobility import Mobility
@@ -9,7 +10,7 @@ app = Flask(__name__)
 Mobility(app)
 app.secret_key = 'my_secret_development_key'
 
-db_path = 'odatastools.db'
+db_path = '%s/odatastools.db' % os.path.dirname(os.path.realpath(__file__))
 
 def get_database():
     db = getattr(g, '_database', None)
