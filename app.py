@@ -15,7 +15,8 @@ bootstrap = Bootstrap(app)
 nav = Nav()
 nav.init_app(app)
 
-app.secret_key = 'my_secret_development_key'
+secret_key = os.environ.get('FLASK_KEY')
+app.secret_key = secret_key if secret_key else 'development_key'
 
 db_path = '%s/odatastools.db' % os.path.dirname(os.path.realpath(__file__))
 
