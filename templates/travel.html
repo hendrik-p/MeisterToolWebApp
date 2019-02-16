@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>Reisehelfer</h1>
+    </div>
+
+    {{ wtf.quick_form(form) }}
+
+    {% if travel_cost_result %}
+
+    <label style="display: inline-block">Reisedauer</label> {{ travel_cost_result.travel_days }} Tage <br>
+    <label style="display: inline-block">Kosten für Proviant</label> {{ travel_cost_result.food_cost }} <br>
+    <label style="display: inline-block">Kosten für Transport</label> {{ travel_cost_result.transport_cost }} <br>
+    <label style="display: inline-block">Kosten insgesamt</label> {{ travel_cost_result.total_cost }} <br>
+    <br>
+
+    <div class="table-responsive">
+    <table>
+        <thead>
+            <th class="col-md-2">
+            </th>
+            <th class="col-md-2">
+                Proviant
+            </th>
+            <th class="col-md-2">
+                Flusskahn
+            </th>
+            <th class="col-md-2">
+                Reisekutsche
+            </th>
+            <th class="col-md-2">
+                Seereise (Hängematte)
+            </th>
+            <th class="col-md-2">
+                Seereise (Kabine)
+            </th>
+        </thead>
+        <tbody>
+            {% for row in travel_cost_result.haggling_table %}
+            <tr>
+                {% for col in row %}
+                <td class="col-md-2">
+                    {{ col }}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

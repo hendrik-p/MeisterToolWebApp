@@ -1,16 +1,14 @@
-<html>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-<body>
-  <div class="sidenav">
-    <a href="/">Home</a> </br>
-    <a href="dangers">Gefahren</a> </br>
-    <a href="dice">Würfeln</a> </br>
-  </div>
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('.static', filename='style.css') }}">
+{% endblock %}
 
-  {% block content %}
-  {% endblock %}
-</body>
+{% block title %}DSA5 MeisterTools{% endblock %}
 
-</html>
+{% block navbar %}
+{{ nav.get_navbar.render() }}
+{% endblock %}
 

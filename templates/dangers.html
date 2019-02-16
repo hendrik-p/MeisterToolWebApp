@@ -1,36 +1,58 @@
 {% extends "base.html" %}
-{% block content %}
-<div class="content">
-  <form method="POST" action="{{ url_for('dangers') }}">
-    {{ form.hidden_tag() }}
-    {{ form.region(**{"onchange":"this.form.submit()"}) }}
-  </form>
 
-  <div>
-    <table>
-    <tr>
-    <th>Wildtier</th>
-    <th>Quelle</th>
-    </tr>
-    {% for name, source in animal_rows %}
-    <tr>
-      <td>{{ name }}</td>
-      <td>{{ source }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-    <table>
-    <tr>
-    <th>Ungeheuer</th>
-    <th>Quelle</th>
-    </tr>
-    {% for name, source in monster_rows %}
-    <tr>
-      <td>{{ name }}</td>
-      <td>{{ source }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-  </div>
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>Wildtiere und Ungeheuer</h1>
+    </div>
+
+    <form method="POST" action="{{ url_for('dangers') }}">
+        {{ form.hidden_tag() }}
+        {{ form.region(**{"onchange":"this.form.submit()"}) }}
+    </form>
+
+    <div class="row">
+
+        <div class="col-md-5 col-sm-6">
+            <div class="table-responsive">
+            <table>
+                <thead>
+                    <th class="col-md-6">Wildtier</th>
+                    <th class="col-md-6">Quelle</th>
+                </thead>
+                <tbody>
+                {% for name, source in animal_rows %}
+                <tr>
+                    <td class="col-md-6" nowrap>{{ name }}</td>
+                    <td class="col-md-6" nowrap>{{ source }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="col-md-5 col-sm-6">
+            <div class="table-responsive">
+            <table>
+                <thead>
+                    <th class="col-md-6">Ungeheuer</th>
+                    <th class="col-md-6">Quelle</th>
+                </thead>
+                <tbody>
+                {% for name, source in monster_rows %}
+                <tr>
+                    <td class="col-md-6" nowrap>{{ name }}</td>
+                    <td class="col-md-6" nowrap>{{ source }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 {% endblock %}

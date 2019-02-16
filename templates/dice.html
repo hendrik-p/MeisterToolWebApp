@@ -1,35 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="content">
-  <div class="input_container">
+<div class="container">
+
+    <div class="row form-group">
     <form method="POST" action="{{ url_for('dice') }}">
-      {{ form.hidden_tag() }}
-      <p>
-      <label>Eigenschaft 1</label> {{ form.attribute1 }} <br>
-      </p>
-      <p>
-      <label>Eigenschaft 2</label> {{ form.attribute2 }} <br>
-      </p>
-      <p>
-      <label>Eigenschaft 3</label> {{ form.attribute3 }} <br>
-      </p>
-      <p>
-      <label>Talentwert</label> {{ form.skill }} <br>
-      </p>
-      <p>
-      <label>Modifikator</label> {{ form.mod }} </br>
-      </p>
-      {{ form.roll_button }}
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                {{ wtf.form_field(form.attribute1) }}
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                {{ wtf.form_field(form.attribute2) }}
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                {{ wtf.form_field(form.attribute3) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                {{ wtf.form_field(form.skill) }}
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                {{ wtf.form_field(form.mod) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                {{ wtf.form_field(form.roll_button) }}
+            </div>
+        </div>
+        {% if rolls %}
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-4">
+                <output>
+                    {{ rolls[0] }}
+                    {{ rolls[1] }}
+                    {{ rolls[2] }} <br>
+                    {{ result_str }}
+                </output>
+            </div>
+        </div>
+        {% endif %}
     </form>
-  </div>
-  {% if rolls %}
+    </div>
+
+    <!--
+    {{ wtf.quick_form(form) }}
+    {% if rolls %}
     {{ rolls[0] }}
     {{ rolls[1] }}
     {{ rolls[2] }}
     <br>
     {{ result_str }}
-  {% endif %}
+    {% endif %}
+    -->
 
 </div>
 {% endblock %}
